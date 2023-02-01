@@ -28,7 +28,7 @@ jobs:
     precheck:
         runs-on: ubuntu-latest
         steps:
-            - uses: kevin-manatal/empty-translation-tags-detection-action@v1.0.0
+            - uses: kevin-manatal/empty-translation-tags-detection-action@v1.1.1
               id: emptytags
               with:
                   full-path: './package.json'

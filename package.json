@@ -1,0 +1,33 @@
+{
+  "name": "empty-translation-tags-detection-action",
+  "version": "1.0.0",
+  "description": "GitHub Action which detects empty translation tags",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage=true",
+    "buildnccroot": "ncc build src/index.js -o dist --license licenses.txt",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-manata/lempty-translation-tags-detection-action.git"
+  },
+  "keywords": [],
+  "author": "Manatal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevin-manatal/empty-translation-tags-detection-action/issues"
+  },
+  "homepage": "https://github.com/kevin-manatal/empty-translation-tags-detection-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.6.3",
+    "jest-each": "^26.6.2",
+    "ncc": "^0.3.6"
+  }
+}

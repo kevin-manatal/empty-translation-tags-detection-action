@@ -1,0 +1,15 @@
+name: 'Empty translation tags detection'
+description: 'This action detects Empty translation tags for a given path.'
+inputs:
+  full-path:
+    description: 'The path to the translation files root folder'
+    required: true
+outputs:
+  found-empty-tags:
+    description: 'Boolean indicator used to tell that empty translation tags where found.'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: "package"
+  color: "green"

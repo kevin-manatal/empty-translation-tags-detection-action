@@ -23,7 +23,7 @@ jobs:
         run: npm run-script buildnccroot
       - run: mkdir -p ./dist
       - name: Commit changes
-        uses: EndBug/add-and-commit@v7
+        uses: EndBug/add-and-commit@v9
         with:
           message: 'Auto update of ncc build artifact'
           add: "['./dist/*']"

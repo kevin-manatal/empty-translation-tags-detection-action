@@ -1,16 +1,16 @@
-'use strict';
+import * as core from '@actions/core'
+import {checkForEmptyTags} from './functions'
 
-import * as core from '@actions/core';
-import { checkForEmptyTags } from './functions';
+async function run(): Promise<void> {
+  try {
+    const fullPath = core.getInput('full-path')
+    core.debug(`fullPath: ${fullPath}`)
 
-const main = async () => {
-  // `full-path`` input defined in action metadata file
-  const fullPath = core.getInput('full-path');
-  console.log(`full-path ${fullPath}`);
+    const hasEmptyTags = checkForEmptyTags(fullPath)
+    core.setOutput('found-empty-tags', hasEmptyTags)
+  } catch (error) {
+    if (error instanceof Error) core.setFailed(error.message)
+  }
+}
 
-  const hasEmptyTags = checkForEmptyTags(fullPath);
-
-  core.setOutput('found-empty-tags', hasEmptyTags);
-};
-
-main().catch((err) => core.setFailed(err.message));
+run()

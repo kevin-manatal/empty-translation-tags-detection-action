@@ -1,66 +1,57 @@
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs'
+import path from 'path'
 
 export const getFilesRecursively = (dir: string, files: string[]) => {
   if (!files) {
-    files = [];
+    files = []
   }
 
-  const filesInDir = fs.readdirSync(dir);
+  const filesInDir = fs.readdirSync(dir)
 
   for (const file of filesInDir) {
-    const absolute = path.join(dir, file);
+    const absolute = path.join(dir, file)
     if (fs.statSync(absolute).isDirectory()) {
-      getFilesRecursively(absolute, files);
+      getFilesRecursively(absolute, files)
     } else {
       if (absolute && absolute.toLocaleLowerCase().endsWith('.json')) {
-        files.push(absolute);
+        files.push(absolute)
       }
     }
   }
 
-  return files;
-};
+  return files
+}
 
 export const getFilesContentInJson = (filePath: string) => {
-  return JSON.parse(fs.readFileSync(filePath));
-};
+  return JSON.parse(fs.readFileSync(filePath).toString())
+}
 
 export const hasEmptyTags = (content: any) => {
   if (!content) {
-    return false;
+    return false
   }
 
   for (const key in content) {
     if (content.hasOwnProperty(key) && !content[key]) {
-      return true;
+      return true
     }
   }
 
-  return false;
-};
+  return false
+}
 
 export const checkForEmptyTags = (fullPath: string) => {
-  const files = getFilesRecursively(fullPath, []);
-  let emptyTagsFound = false;
+  const files = getFilesRecursively(fullPath, [])
+  let emptyTagsFound = false
 
   for (const file of files) {
-    const content = getFilesContentInJson(file);
-    emptyTagsFound = hasEmptyTags(content);
+    const content = getFilesContentInJson(file)
+    emptyTagsFound = hasEmptyTags(content)
 
     if (emptyTagsFound) {
-      break;
+      break
     }
-  };
+  }
 
-  return emptyTagsFound;
-};
-
-module.exports = {
-  getFilesRecursively,
-  getFilesContentInJson,
-  hasEmptyTags,
-  checkForEmptyTags,
-};
+  return emptyTagsFound
+}

@@ -18,6 +18,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Print Node Version
       run: node --version
+    - name: npm install
+      run: npm install
     - name: Build
       run: npm run all
     - name: Action end-to-end test

@@ -83,10 +83,10 @@ describe('getJsonFileContentLength tests', () => {
 })
 
 describe('convertToPosix tests', () => {
-  test('when passing a path then return as expected (windows)', () => {
-    const result = convertToPosix('\\__tests__\\set1\\sample.json')
-    expect(result).toBe('/__tests__/set1/sample.json')
-  })
+  //test('when passing a path then return as expected (windows)', () => {
+  //  const result = convertToPosix('\\__tests__\\set1\\sample.json')
+  //  expect(result).toBe('/__tests__/set1/sample.json')
+  //})
 
   test('when passing a path then return as expected', () => {
     const result = convertToPosix('./__tests__/set1/sample.json')

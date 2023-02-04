@@ -27,4 +27,4 @@ jobs:
       id: emptytags
       with:
         full-path: "__tests__/set1/"
-    - run: echo "result ${{ steps.emptytags.outputs.found-pre-release }}"
+    - run: echo "result ${{ steps.emptytags.outputs.found-empty-tags }}"

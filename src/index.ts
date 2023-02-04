@@ -7,7 +7,7 @@ async function run(): Promise<void> {
     core.debug(`fullPath: ${fullPath}`)
 
     const hasEmptyTags = checkForEmptyTags(fullPath)
-    core.setOutput('found-empty-tags', hasEmptyTags)
+    core.setOutput('found-missing-translations', hasEmptyTags)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

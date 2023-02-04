@@ -1,12 +1,12 @@
-name: 'Empty translation tags detection'
-description: 'This action detects Empty translation tags for a given path.'
+name: 'Empty or missing translation tags detection'
+description: 'This action detects empty or missing translation tags for a given path.'
 inputs:
   full-path:
-    description: 'The path to the translation files root folder'
+    description: 'The path to the locales files root folder, make sure this folder has a sub-folder for each language.'
     required: true
 outputs:
-  found-empty-tags:
-    description: 'Boolean indicator used to tell that empty translation tags where found.'
+  found-missing-translations:
+    description: 'Boolean indicator used to tell that empty or missing translation tags where found.'
 runs:
   using: 'node16'
   main: 'dist/index.js'

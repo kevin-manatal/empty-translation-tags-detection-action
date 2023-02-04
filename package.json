@@ -1,7 +1,7 @@
 {
   "name": "empty-translation-tags-detection-action",
   "version": "1.0.0",
-  "description": "GitHub Action which detects empty translation tags",
+  "description": "GitHub Action which detects empty or missing translation tags",
   "main": "lib/index.js",
   "private": true,
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kevin-manata/lempty-translation-tags-detection-action.git"
+    "url": "git+https://github.com/kevin-manatal/empty-translation-tags-detection-action.git"
   },
   "keywords": [],
   "author": "Manatal",

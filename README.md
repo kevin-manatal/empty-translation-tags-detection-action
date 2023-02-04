@@ -42,10 +42,10 @@ jobs:
     precheck:
         runs-on: ubuntu-latest
         steps:
-            - uses: kevin-manatal/empty-translation-tags-detection-action@v1.1.1
+            - uses: kevin-manatal/empty-translation-tags-detection-action@v1.2.1
               id: missingtags
               with:
-                  full-path: './package.json'
+                  full-path: './src/locales'
             - run: echo "result ${{ steps.missingtags.outputs.found-missing-translations }}"
 ```
 

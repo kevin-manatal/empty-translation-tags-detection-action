@@ -1,6 +1,6 @@
 import {
   hasEmptyTags,
-  checkForEmptyTags, createFileMetaStats, missingTagsInStats
+  checkForEmptyTags, createFileMetaStats, missingTagsInStats, checkForMissingTags
 } from '../src/helpers'
 import {describe, expect, test} from '@jest/globals'
 
@@ -80,3 +80,20 @@ describe('missingTagsInStats tests', () => {
     expect(result).toBeFalsy()
   })
 })
+
+describe('checkForMissingTags tests', () => {
+  test('when there are no missing files', () => {
+    const result = checkForMissingTags('./__tests__/set3/')
+    expect(result).toBeFalsy()
+  })
+  test('when there are missing files', () => {
+    const result = checkForMissingTags('./__tests__/set5')
+    expect(result).toBeTruthy()
+  })
+  test('when there are missing lines/entries', () => {
+    const result = checkForMissingTags('./__tests__/set4')
+    expect(result).toBeTruthy()
+  })
+})
+
+

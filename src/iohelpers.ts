@@ -46,10 +46,14 @@ export const getFileMeta = (fullPath: string) => {
   const files = getFilesRecursively(fullPath, [])
   const fullPathPosix = convertToPosix(fullPath)
 
-  for (const file of files) {
+  for (let file of files) {
     const numberOfLines = getJsonFileContentLength(file)
+    file = convertToPosix(file).replace(fullPathPosix, '')
+    if (file.startsWith('/')) {
+      file = file.slice(1)
+    }
     meta.push({
-      file: convertToPosix(file).replace(fullPathPosix, ''),
+      file,
       numberOfLines
     })
   }

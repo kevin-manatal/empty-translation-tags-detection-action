@@ -1,41 +1,14 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 358:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ 8:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkForEmptyTags = exports.hasEmptyTags = exports.getFilesContentInJson = exports.getFilesRecursively = void 0;
-const fs_1 = __importDefault(__nccwpck_require__(747));
-const path_1 = __importDefault(__nccwpck_require__(622));
-const getFilesRecursively = (dir, files) => {
-    if (!files) {
-        files = [];
-    }
-    const filesInDir = fs_1.default.readdirSync(dir);
-    for (const file of filesInDir) {
-        const absolute = path_1.default.join(dir, file);
-        if (fs_1.default.statSync(absolute).isDirectory()) {
-            (0, exports.getFilesRecursively)(absolute, files);
-        }
-        else {
-            if (absolute && absolute.toLocaleLowerCase().endsWith('.json')) {
-                files.push(absolute);
-            }
-        }
-    }
-    return files;
-};
-exports.getFilesRecursively = getFilesRecursively;
-const getFilesContentInJson = (filePath) => {
-    return JSON.parse(fs_1.default.readFileSync(filePath).toString());
-};
-exports.getFilesContentInJson = getFilesContentInJson;
+exports.createFileMetaStats = exports.missingTagsInStats = exports.checkForMissingTags = exports.checkForEmptyTags = exports.hasEmptyTags = void 0;
+const iohelpers_1 = __nccwpck_require__(277);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const hasEmptyTags = (content) => {
     if (!content) {
@@ -50,10 +23,10 @@ const hasEmptyTags = (content) => {
 };
 exports.hasEmptyTags = hasEmptyTags;
 const checkForEmptyTags = (fullPath) => {
-    const files = (0, exports.getFilesRecursively)(fullPath, []);
+    const files = (0, iohelpers_1.getFilesRecursively)(fullPath, []);
     let emptyTagsFound = false;
     for (const file of files) {
-        const content = (0, exports.getFilesContentInJson)(file);
+        const content = (0, iohelpers_1.getFileContentInJson)(file);
         emptyTagsFound = (0, exports.hasEmptyTags)(content);
         if (emptyTagsFound) {
             break;
@@ -62,6 +35,46 @@ const checkForEmptyTags = (fullPath) => {
     return emptyTagsFound;
 };
 exports.checkForEmptyTags = checkForEmptyTags;
+const checkForMissingTags = (fullPath) => {
+    const meta = (0, iohelpers_1.getFileMeta)(fullPath);
+    const stats = (0, exports.createFileMetaStats)(meta);
+    const hasMissingTags = (0, exports.missingTagsInStats)(stats);
+    return hasMissingTags;
+};
+exports.checkForMissingTags = checkForMissingTags;
+const missingTagsInStats = (stats) => {
+    const firstEntry = stats[0];
+    for (let i = 1; i < stats.length; i++) {
+        const entry = stats[i];
+        if (entry.numberOfLines !== firstEntry.numberOfLines ||
+            entry.numberOfFiles !== firstEntry.numberOfFiles) {
+            return true;
+        }
+    }
+    return false;
+};
+exports.missingTagsInStats = missingTagsInStats;
+const createFileMetaStats = (meta) => {
+    const stats = [];
+    for (const file of meta) {
+        const numberOfLines = file.numberOfLines;
+        const rootFolder = file.file.split('/')[0];
+        const item = stats.find(i => i.rootFolder === rootFolder);
+        if (item) {
+            item.numberOfLines = item.numberOfLines + numberOfLines;
+            item.numberOfFiles = item.numberOfFiles + 1;
+        }
+        else {
+            stats.push({
+                rootFolder,
+                numberOfLines,
+                numberOfFiles: 1
+            });
+        }
+    }
+    return stats;
+};
+exports.createFileMetaStats = createFileMetaStats;
 
 
 /***/ }),
@@ -105,14 +118,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
-const functions_1 = __nccwpck_require__(358);
+const helpers_1 = __nccwpck_require__(8);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const fullPath = core.getInput('full-path');
             core.debug(`fullPath: ${fullPath}`);
-            const hasEmptyTags = (0, functions_1.checkForEmptyTags)(fullPath);
-            core.setOutput('found-missing-translations', hasEmptyTags);
+            const hasEmptyTags = (0, helpers_1.checkForEmptyTags)(fullPath);
+            const hasMissingTags = (0, helpers_1.checkForMissingTags)(fullPath);
+            core.debug(`hasEmptyTags: ${hasEmptyTags} - hasMissingTags: ${hasMissingTags}`);
+            core.setOutput('found-missing-translations', hasEmptyTags && hasMissingTags);
         }
         catch (error) {
             if (error instanceof Error)
@@ -121,6 +136,74 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getFileMeta = exports.convertToPosix = exports.getJsonFileContentLength = exports.getFilesContent = exports.getFileContentInJson = exports.getFilesRecursively = void 0;
+const fs_1 = __importDefault(__nccwpck_require__(747));
+const path_1 = __importDefault(__nccwpck_require__(622));
+const getFilesRecursively = (dir, files) => {
+    if (!files) {
+        files = [];
+    }
+    const filesInDir = fs_1.default.readdirSync(dir);
+    for (const file of filesInDir) {
+        const absolute = path_1.default.join(dir, file);
+        if (fs_1.default.statSync(absolute).isDirectory()) {
+            (0, exports.getFilesRecursively)(absolute, files);
+        }
+        else {
+            if (absolute && absolute.toLocaleLowerCase().endsWith('.json')) {
+                files.push(absolute);
+            }
+        }
+    }
+    return files;
+};
+exports.getFilesRecursively = getFilesRecursively;
+const getFileContentInJson = (filePath) => {
+    return JSON.parse(fs_1.default.readFileSync(filePath).toString());
+};
+exports.getFileContentInJson = getFileContentInJson;
+const getFilesContent = (filePath) => {
+    return fs_1.default.readFileSync(filePath).toString();
+};
+exports.getFilesContent = getFilesContent;
+const getJsonFileContentLength = (filePath) => {
+    const content = (0, exports.getFileContentInJson)(filePath);
+    return Object.keys(content).length;
+};
+exports.getJsonFileContentLength = getJsonFileContentLength;
+const convertToPosix = (dir) => {
+    dir = dir.replace('./', '');
+    const posix = dir.split(path_1.default.sep).join(path_1.default.posix.sep);
+    return posix;
+};
+exports.convertToPosix = convertToPosix;
+const getFileMeta = (fullPath) => {
+    const meta = [];
+    const files = (0, exports.getFilesRecursively)(fullPath, []);
+    const fullPathPosix = (0, exports.convertToPosix)(fullPath);
+    for (const file of files) {
+        const numberOfLines = (0, exports.getJsonFileContentLength)(file);
+        meta.push({
+            file: (0, exports.convertToPosix)(file).replace(fullPathPosix, ''),
+            numberOfLines
+        });
+    }
+    return meta;
+};
+exports.getFileMeta = getFileMeta;
 
 
 /***/ }),

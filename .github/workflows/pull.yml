@@ -24,7 +24,7 @@ jobs:
       run: npm run all
     - name: Action end-to-end test
       uses: ./
-      id: emptytags
+      id: missingtags
       with:
         full-path: "__tests__/set1/"
-    - run: echo "result ${{ steps.emptytags.outputs.found-empty-tags }}"
+    - run: echo "result ${{ steps.missingtags.outputs.found-missing-tags }}"

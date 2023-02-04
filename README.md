@@ -1,8 +1,8 @@
-# NPM pre-release packages check
+# Empty or missing translation tags detection
 
 ## What is it?
 
-This action detects empty translation tags.
+This action detects empty or missing translation tags.
 
 ## How to use it?
 
@@ -14,11 +14,25 @@ This action detects empty translation tags.
 
 **Required** The path to the translation files root folder. Example `"./src/locales"`.
 
+make sure this folder has a sub-folder for each language.
+
+    ./src/locales
+    ├── EN
+    |   ├── main.json
+    |   └── admin.json
+    ├── TH
+    |   ├── main.json
+    |   └── admin.json
+    ├── JP
+    |   ├── main.json
+    |   └── admin.json
+    └── ...
+
 ## Outputs
 
-### `found-empty-tags`
+### `found-missing-translations`
 
-Boolean indicator used to tell that a empty tags where found.
+Boolean indicator used to tell that empty or missing translation tags where found.
 
 ## Example usage
 
@@ -29,10 +43,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: kevin-manatal/empty-translation-tags-detection-action@v1.1.1
-              id: emptytags
+              id: missingtags
               with:
                   full-path: './package.json'
-            - run: echo "result ${{ steps.emptytags.outputs.found-empty-tags }}"
+            - run: echo "result ${{ steps.missingtags.outputs.found-missing-translations }}"
 ```
 
 # Contact and bug reports

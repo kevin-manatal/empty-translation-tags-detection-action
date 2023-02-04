@@ -112,7 +112,7 @@ function run() {
             const fullPath = core.getInput('full-path');
             core.debug(`fullPath: ${fullPath}`);
             const hasEmptyTags = (0, functions_1.checkForEmptyTags)(fullPath);
-            core.setOutput('found-empty-tags', hasEmptyTags);
+            core.setOutput('found-missing-translations', hasEmptyTags);
         }
         catch (error) {
             if (error instanceof Error)

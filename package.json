@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "GitHub Action which detects empty translation tags",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
+    "build": "tsc",
     "test": "jest",
+    "format": "prettier --write '**/*.ts'",
+    "format-check": "prettier --check '**/*.ts'",
     "coverage": "jest --coverage=true",
+    "lint": "eslint src/**/*.ts",
+    "package": "ncc build --source-map --license licenses.txt",
     "buildnccroot": "ncc build src/index.js -o dist --license licenses.txt",
-    "lint": "eslint ."
+    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
@@ -28,6 +34,8 @@
     "eslint-config-google": "^0.14.0",
     "jest": "^26.6.3",
     "jest-each": "^26.6.2",
-    "ncc": "^0.3.6"
+    "ncc": "^0.3.6",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5"
   }
 }

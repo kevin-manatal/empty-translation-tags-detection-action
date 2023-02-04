@@ -1,6 +1,6 @@
 import {
   hasEmptyTags,
-  checkForEmptyTags
+  checkForEmptyTags, createFileMetaStats, missingTagsInStats
 } from '../src/functions'
 import {describe, expect, test} from '@jest/globals'
 
@@ -47,3 +47,38 @@ describe('checkForEmptyTags tests', () => {
     expect(result).toBeTruthy()
   })
 })
+
+describe('createFileMetaStats tests', () => {
+  test('when providing a valid path set4', () => {
+    const result = createFileMetaStats([{"file": "DE/admin.json", "numberOfLines": 1}, {"file": "DE/main.json",
+      "numberOfLines": 2}, {"file": "EN/admin.json", "numberOfLines": 2}, {"file": "EN/main.json", "numberOfLines": 2}])
+
+    expect(result).toStrictEqual([{"numberOfFiles": 2, "numberOfLines": 3, "rootFolder": "DE"},
+      {"numberOfFiles": 2, "numberOfLines": 4, "rootFolder": "EN"}])
+  })
+})
+
+describe('missingTagsInStats tests', () => {
+  test('when providing a set with missing lines', () => {
+    const result = missingTagsInStats([{"numberOfFiles": 2, "numberOfLines": 3, "rootFolder": "DE"},
+      {"numberOfFiles": 2, "numberOfLines": 4, "rootFolder": "EN"}])
+
+    expect(result).toBeTruthy()
+  })
+
+  test('when providing a set with missing files', () => {
+    const result = missingTagsInStats([{"numberOfFiles": 1, "numberOfLines": 3, "rootFolder": "DE"},
+      {"numberOfFiles": 2, "numberOfLines": 3, "rootFolder": "EN"}])
+
+    expect(result).toBeTruthy()
+  })
+
+  test('when providing a set with which is equal', () => {
+    const result = missingTagsInStats([{"numberOfFiles": 2, "numberOfLines": 3, "rootFolder": "DE"},
+      {"numberOfFiles": 2, "numberOfLines": 3, "rootFolder": "EN"}])
+
+    expect(result).toBeFalsy()
+  })
+})
+
+// checkForMissingTags,

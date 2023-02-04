@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {checkForEmptyTags} from './functions'
+import {checkForEmptyTags, checkForMissingTags} from './functions'
 
 async function run(): Promise<void> {
   try {
@@ -7,7 +7,13 @@ async function run(): Promise<void> {
     core.debug(`fullPath: ${fullPath}`)
 
     const hasEmptyTags = checkForEmptyTags(fullPath)
-    core.setOutput('found-missing-translations', hasEmptyTags)
+    const hasMissingTags = checkForMissingTags(fullPath)
+
+    core.debug(
+      `hasEmptyTags: ${hasEmptyTags} - hasMissingTags: ${hasMissingTags}`
+    )
+
+    core.setOutput('found-missing-translations', hasEmptyTags && hasMissingTags)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

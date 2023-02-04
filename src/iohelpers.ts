@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import {fileMeta} from './fileMetaStats'
 
 export const getFilesRecursively = (dir: string, files: string[]) => {
   if (!files) {
@@ -22,6 +23,35 @@ export const getFilesRecursively = (dir: string, files: string[]) => {
   return files
 }
 
-export const getFilesContentInJson = (filePath: string) => {
+export const getFileContentInJson = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath).toString())
+}
+
+export const getFilesContent = (filePath: string) => {
+  return fs.readFileSync(filePath).toString()
+}
+
+export const getJsonFileContentLength = (filePath: string) => {
+  const content = getFileContentInJson(filePath)
+  return Object.keys(content).length
+}
+
+export const convertToPosix = (dir: string) => {
+  dir = dir.replace('./', '')
+  const posix = dir.split(path.sep).join(path.posix.sep)
+  return posix
+}
+export const getFileMeta = (fullPath: string) => {
+  const meta: fileMeta[] = []
+  const files = getFilesRecursively(fullPath, [])
+  const fullPathPosix = convertToPosix(fullPath)
+
+  for (const file of files) {
+    const numberOfLines = getJsonFileContentLength(file)
+    meta.push({
+      file: convertToPosix(file).replace(fullPathPosix, ''),
+      numberOfLines
+    })
+  }
+  return meta
 }

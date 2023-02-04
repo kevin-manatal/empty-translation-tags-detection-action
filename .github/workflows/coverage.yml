@@ -17,4 +17,4 @@ jobs:
                   test-script: yarn jest
             - uses: marocchino/sticky-pull-request-comment@v2
               with:
-              message: ${{ steps.coverage.outputs.report }}
+                  message: ${{ steps.coverage.outputs.report }}

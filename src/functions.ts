@@ -26,6 +26,7 @@ export const getFilesContentInJson = (filePath: string) => {
   return JSON.parse(fs.readFileSync(filePath).toString())
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const hasEmptyTags = (content: any) => {
   if (!content) {
     return false

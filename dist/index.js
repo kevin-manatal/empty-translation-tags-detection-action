@@ -194,10 +194,14 @@ const getFileMeta = (fullPath) => {
     const meta = [];
     const files = (0, exports.getFilesRecursively)(fullPath, []);
     const fullPathPosix = (0, exports.convertToPosix)(fullPath);
-    for (const file of files) {
+    for (let file of files) {
         const numberOfLines = (0, exports.getJsonFileContentLength)(file);
+        file = (0, exports.convertToPosix)(file).replace(fullPathPosix, '');
+        if (file.startsWith('/')) {
+            file = file.slice(1);
+        }
         meta.push({
-            file: (0, exports.convertToPosix)(file).replace(fullPathPosix, ''),
+            file,
             numberOfLines
         });
     }

@@ -106,5 +106,5 @@ typings/
 
 # Ignore built ts files
 __tests__/runner/*
-tests/runner/*
+__tests__/runner/*
 lib/**/*

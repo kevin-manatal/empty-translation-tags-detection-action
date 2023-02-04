@@ -8,7 +8,7 @@ outputs:
   found-empty-tags:
     description: 'Boolean indicator used to tell that empty translation tags where found.'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: "package"

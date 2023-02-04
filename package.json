@@ -2,12 +2,18 @@
   "name": "empty-translation-tags-detection-action",
   "version": "1.0.0",
   "description": "GitHub Action which detects empty translation tags",
-  "main": "src/index.js",
+  "main": "lib/index.js",
+  "private": true,
   "scripts": {
+    "build": "tsc",
     "test": "jest",
+    "format": "prettier --write ./**/*.ts",
+    "format-check": "prettier --check ./**/*.ts",
     "coverage": "jest --coverage=true",
+    "lint": "eslint src/**/*.ts",
+    "package": "ncc build --source-map --license licenses.txt",
     "buildnccroot": "ncc build src/index.js -o dist --license licenses.txt",
-    "lint": "eslint ."
+    "all": "npm install & npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",
@@ -24,10 +30,18 @@
     "@actions/core": "^1.2.6"
   },
   "devDependencies": {
-    "eslint": "^7.18.0",
-    "eslint-config-google": "^0.14.0",
-    "jest": "^26.6.3",
+    "@types/node": "^18.11.0",
+    "@typescript-eslint/parser": "^5.50.0",
+    "@vercel/ncc": "^0.31.1",
+    "eslint": "^8.0.1",
+    "eslint-plugin-github": "^4.6.0",
+    "eslint-plugin-jest": "^25.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jest": "^27.2.5",
     "jest-each": "^26.6.2",
-    "ncc": "^0.3.6"
+    "js-yaml": "^4.1.0",
+    "prettier": "2.5.1",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.9.5"
   }
 }

@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {checkForEmptyTags, checkForMissingTags} from './functions'
+import {checkForEmptyTags, checkForMissingTags} from './helpers'
 
 async function run(): Promise<void> {
   try {

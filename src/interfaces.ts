@@ -1,4 +1,3 @@
-// eslint-disable-next-line filenames/match-regex
 export interface fileMetaStats {
   rootFolder: string
   numberOfLines: number

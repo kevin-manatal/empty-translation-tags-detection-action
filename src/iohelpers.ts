@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import {fileMeta} from './fileMetaStats'
+import {fileMeta} from './interfaces'
 
 export const getFilesRecursively = (dir: string, files: string[]) => {
   if (!files) {

@@ -37,7 +37,7 @@ describe('getFilesContentInJson tests', () => {
 
   test('when passing a path but not json then return an exception', () => {
     try {
-      getFileContentInJson('./__tests__/functions.test.ts')
+      getFileContentInJson('./__tests__/helpers.test.ts')
     } catch (e: any) {
       expect(e.message.length).toBeTruthy()
     }
@@ -62,7 +62,7 @@ describe('getFilesContent tests', () => {
   })
 
   test('when passing a valid path then we expect a result', () => {
-    const result = getFilesContent('./__tests__/functions.test.ts')
+    const result = getFilesContent('./__tests__/helpers.test.ts')
     expect(result).toBeTruthy()
   })
 })

@@ -3,7 +3,7 @@ import {
   getFileContentInJson,
   getFileMeta
 } from './iohelpers'
-import {fileMeta, fileMetaStats} from './fileMetaStats'
+import {fileMeta, fileMetaStats} from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const hasEmptyTags = (content: any) => {

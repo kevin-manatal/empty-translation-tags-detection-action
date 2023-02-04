@@ -1,7 +1,7 @@
 import {
   hasEmptyTags,
   checkForEmptyTags, createFileMetaStats, missingTagsInStats
-} from '../src/functions'
+} from '../src/helpers'
 import {describe, expect, test} from '@jest/globals'
 
 describe('hasEmptyTags tests', () => {
@@ -80,5 +80,3 @@ describe('missingTagsInStats tests', () => {
     expect(result).toBeFalsy()
   })
 })
-
-// checkForMissingTags,

@@ -13,7 +13,7 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "buildnccroot": "ncc build src/index.js -o dist --license licenses.txt",
-    "all": "yarn install & yarn run build && yarn run format && yarn run lint && yarn run package && yarn test"
+    "all": "npm install & npm run build && npm run format && npm run lint && npm run package && npm test"
   },
   "repository": {
     "type": "git",

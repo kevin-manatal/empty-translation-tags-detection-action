@@ -19,7 +19,7 @@ jobs:
     - name: Print Node Version
       run: node --version
     - name: Build
-      run: yarn all
+      run: npm run all
     - name: Action end-to-end test
       uses: ./
       id: emptytags

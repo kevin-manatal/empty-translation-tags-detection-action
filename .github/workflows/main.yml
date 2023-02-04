@@ -21,7 +21,7 @@ jobs:
       - name: Print Node Version
         run: node --version
       - name: Build
-        run: yarn all
+        run: npm run all
       - run: mkdir -p ./dist
       - name: Commit changes
         uses: EndBug/add-and-commit@v9

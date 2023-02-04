@@ -20,6 +20,8 @@ jobs:
           node-version: 16.x
       - name: Print Node Version
         run: node --version
+      - name: npm install
+        run: npm install
       - name: Build
         run: npm run all
       - run: mkdir -p ./dist

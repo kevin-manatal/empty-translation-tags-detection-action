@@ -8,13 +8,15 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
+            - name: yarn install
+              run: yarn install
             - uses: ArtiomTr/jest-coverage-report-action@v2
               id: coverage
               with:
                   output: report-markdown
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   threshold: 80
-                  test-script: yarn jest
+                  test-script: yarn test
             - uses: marocchino/sticky-pull-request-comment@v2
               with:
                   message: ${{ steps.coverage.outputs.report }}

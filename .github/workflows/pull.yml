@@ -26,5 +26,5 @@ jobs:
       uses: ./
       id: emptytags
       with:
-        full-path: ./package.json
+        full-path: "__tests__/set1/"
     - run: echo "result ${{ steps.emptytags.outputs.found-pre-release }}"
